@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+#search-form {
+    margin-top: 20px;
+}
+
+#search-input {
+    padding: 8px;
+    width: 60%;
+}
+
+button {
+    padding: 8px 15px;
+}
+
+#search-results {
+    margin-top: 20px;
+}

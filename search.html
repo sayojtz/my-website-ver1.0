@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #searchInput {
+            padding: 10px;
+            width: 300px;
+        }
+        #searchResults {
+            margin-top: 20px;
+            position: relative;
+        }
+        .searchResult {
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #ccc;
+        }
+        .searchResult:hover {
+            background-color: #ddd;
+        }
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            display: none;
+            background-color: #fff;
+            z-index: 1;
+        }
+        .suggestion {
+            cursor: pointer;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Engine</h1>
+    
+    <div id="searchContainer">
+        <input type="text" id="searchInput" placeholder="Enter your search term" oninput="showResults()">
+        <div id="searchResults"></div>
+        <div class="suggestions" id="suggestionContainer"></div>
+    </div>
+
+    <script>
+        function showResults() {
+            var searchTerm = document.getElementById('searchInput').value;
+
+            if (searchTerm.trim() !== '') {
+                // Simulate fetching search results (replace with actual data)
+                var mockResults = [
+                    'rtx',
+                    'RTX Result 2',
+                    'CPU Result 1',
+                    'CPU Result 2',
+                    'GPU and CPU Result'
+                ];
+
+                var resultsContainer = document.getElementById('searchResults');
+                resultsContainer.innerHTML = ''; // Clear previous results
+
+                // Display search results
+                mockResults.forEach(function(result) {
+                    // Check if the result contains the search term
+                    if (result.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        var resultDiv = document.createElement('div');
+                        resultDiv.className = 'searchResult';
+                        resultDiv.innerText = result;
+
+                        // Add click event to open the result in a new tab
+                        resultDiv.onclick = function() {
+                            if (result.toLowerCase().includes('rtx')) {
+                                window.open('https://www.rtxwebsite.com/search?q=' + encodeURIComponent(result), '_blank');
+                            } else if (result.toLowerCase().includes('gpu')) {
+                                window.open('gpu.html', '_blank');
+                            } else if (result.toLowerCase().includes('cpu')) {
+                                window.open('cpu.html', '_blank');
+                            }
+                        };
+
+                        resultsContainer.appendChild(resultDiv);
+                    }
+                });
+
+                // Show the suggestions
+                showSuggestions(searchTerm);
+            } else {
+                // Clear results and hide suggestions if search term is empty
+                document.getElementById('searchResults').innerHTML = '';
+                document.getElementById('suggestionContainer').style.display = 'none';
+            }
+        }
+
+        function showSuggestions(prefix) {
+            var suggestionsContainer = document.getElementById('suggestionContainer');
+            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+
+            // Simulate fetching suggestions (replace with actual data)
+            var mockSuggestions = [
+                'rtx 3080',
+                'rtx 3070',
+                'rtx 3060',
+                'CPU recommendations',
+                'GPU reviews'
+            ];
+
+            mockSuggestions.forEach(function(suggestion) {
+                // Check if the suggestion starts with the search term
+                if (suggestion.toLowerCase().startsWith(prefix.toLowerCase())) {
+                    var suggestionDiv = document.createElement('div');
+                    suggestionDiv.className = 'suggestion';
+                    suggestionDiv.innerText = suggestion;
+
+                    // Add click event to set suggestion as the search term
+                    suggestionDiv.onclick = function() {
+                        document.getElementById('searchInput').value = suggestion;
+                        showResults(); // Trigger search with selected suggestion
+                    };
+
+                    suggestionsContainer.appendChild(suggestionDiv);
+                }
+            });
+
+            // Show the suggestions container
+            suggestionsContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
